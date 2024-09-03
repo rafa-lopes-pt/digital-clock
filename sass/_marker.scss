@@ -1,0 +1,61 @@
+@use "./base" as constants;
+$clockDiam: constants.$clockDiam;
+.marker {
+	width: calc($clockDiam * 1 / 3.25);
+	height: 2rem;
+	position: absolute;
+	top: 50%;
+	right: 0%;
+	transform: translate(0%, -50%);
+	border-radius: 50px;
+	border: 3px solid hsl(var(--hue), 50%, 50%);
+
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right-width: 0px;
+	opacity: 0;
+	color: transparent;
+
+	transition: all 0.5s ease;
+	animation: onLoadClock__markerDelay 1.5s ease forwards 1s;
+
+	display: flex;
+	place-content: center;
+	place-items: center;
+	font-size: 1.5rem;
+	gap: 0.5em;
+
+	padding: 1.25rem;
+
+	& > * {
+		opacity: 0;
+		font-size: 1.35rem;
+	}
+
+	&__ampm {
+		vertical-align: center;
+		font-size: 0.85em;
+	}
+
+	@media (hover: none) {
+		min-width: fit-content;
+		text-wrap: nowrap;
+
+		top: $clockDiam * 1.25;
+		left: 50%;
+		transform: translate(-50%, 0%);
+
+		border-top-right-radius: 50px;
+		border-bottom-right-radius: 50px;
+		border-right-width: 3px;
+
+		animation: onLoadClock__markerDelay 1.25s ease-in forwards 1.01s;
+
+		color: #eee;
+		background-color: #5555;
+
+		& > * {
+			opacity: 1;
+		}
+	}
+}

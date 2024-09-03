@@ -1,238 +1,88 @@
-$clockDiam: 55vmin;
+@use "./base" as constants;
+$clockDiam: constants.$clockDiam;
 @keyframes onLoadClock {
-    from {
-        opacity: 0;
-        transform: scale(80%);
-        width: $clockDiam * 0;
-        height: $clockDiam * 0;
-        overflow: hidden;
-    }
-    25% {
-        opacity: 1;
-        transform: scale(80%);
-        width: $clockDiam * 0.15;
-        height: $clockDiam * 0.15;
-        overflow: hidden;
-    }
+	from {
+		opacity: 0;
+		transform: scale(80%);
+		width: $clockDiam * 0;
+		height: $clockDiam * 0;
+		overflow: hidden;
+	}
+	25% {
+		opacity: 1;
+		transform: scale(80%);
+		width: $clockDiam * 0.15;
+		height: $clockDiam * 0.15;
+		overflow: hidden;
+	}
 
-    35% {
-        opacity: 1;
-        width: $clockDiam * 0.25;
-        height: $clockDiam * 0.25;
-        overflow: hidden;
-    }
-    99% {
-        overflow: hidden;
-    }
-    to {
-        opacity: 1;
-        transform: scale(100%);
-        width: $clockDiam;
-        height: $clockDiam;
-        overflow: visible;
-    }
+	35% {
+		opacity: 1;
+		width: $clockDiam * 0.25;
+		height: $clockDiam * 0.25;
+		overflow: hidden;
+	}
+	99% {
+		overflow: hidden;
+	}
+	to {
+		opacity: 1;
+		transform: scale(100%);
+		width: $clockDiam;
+		height: $clockDiam;
+		overflow: visible;
+	}
 }
 
 @keyframes onLoadClock__markerDelay {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 .clock {
-    width: $clockDiam;
-    height: $clockDiam;
-    position: relative;
+	width: $clockDiam;
+	height: $clockDiam;
+	position: relative;
 
-    border-radius: 100%;
-    box-shadow: inset 2px 2px 20px 2px hsl(var(--hue), 50%, 50%);
-    transition: all 1s ease;
+	border-radius: 100%;
+	box-shadow: inset 2px 2px 20px 2px hsl(var(--hue), 50%, 50%);
+	transition: all 1s ease;
 
-    //
-    opacity: 0;
-    transform: scale(0%);
-    animation: onLoadClock 1.5s ease-out forwards;
-    //
-    .marker {
-        width: $clockDiam * 1/3.25;
-        height: 2rem;
-        position: absolute;
-        top: 50%;
-        right: 0%;
-        transform: translate(0%, -50%);
-        border-radius: 50px;
-        border: 3px solid hsl(var(--hue), 50%, 50%);
+	//
+	opacity: 0;
+	transform: scale(0%);
+	animation: onLoadClock 1.5s ease-out forwards;
+	//
 
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        border-right-width: 0px;
-        opacity: 0;
-        color: transparent;
+	@media (hover: hover) {
+		&:hover {
+			& .marker {
+				width: fit-content;
+				text-wrap: nowrap;
 
-        transition: all 0.5s ease;
-        animation: onLoadClock__markerDelay 1.5s ease forwards 1s;
+				left: 50%;
+				transform: translate(-50%, -50%);
 
-        display: flex;
-        place-content: center;
-        place-items: center;
-        font-size: 1.5rem;
+				border-top-right-radius: 50px;
+				border-bottom-right-radius: 50px;
+				border-right-width: 3px;
+				animation: onLoadClock__markerDelay 1.5s ease forwards 1s;
 
-        & > * {
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
+				opacity: 0;
+				color: #eee;
+				background-color: #5555;
+				& > * {
+					opacity: 1;
+				}
+			}
 
-        &__ampm {
-            vertical-align: bottom;
-            margin-left: 1em;
-            font-size: 0.65em;
-        }
-    }
-    @media (hover: none) {
-        .marker {
-            width: fit-content;
-            text-wrap: nowrap;
-
-            top: $clockDiam * 1.25;
-            left: 50%;
-            transform: translate(-50%, 0%);
-
-            border-top-right-radius: 50px;
-            border-bottom-right-radius: 50px;
-            border-right-width: 3px;
-
-            padding: 1rem;
-            animation: onLoadClock__markerDelay 1.25s ease-in forwards 1.01s;
-
-            color: #eee;
-            background-color: #5555;
-        }
-    }
-
-    @media (hover: hover) {
-        &:hover {
-            & .marker {
-                width: fit-content;
-                text-wrap: nowrap;
-
-                left: 50%;
-                transform: translate(-50%, -50%);
-
-                border-top-right-radius: 50px;
-                border-bottom-right-radius: 50px;
-                border-right-width: 3px;
-                animation: onLoadClock__markerDelay 1.5s ease forwards 1s;
-
-                padding: 1rem;
-
-                opacity: 0;
-                color: #eee;
-                background-color: #5555;
-                & > * {
-                    opacity: 1;
-                }
-            }
-
-            & .time-grid {
-                filter: blur(5px);
-            }
-        }
-    }
-}
-
-.time-grid {
-    @keyframes clockSpin {
-        from {
-            transform: translate(-50%, -50%) rotate(var(--angle));
-        }
-        to {
-            transform: translate(-50%, -50%) rotate(calc(var(--angle) + 360deg));
-        }
-    }
-    @keyframes numberSpin {
-        0% {
-            transform: rotate(calc(360deg + -1 * var(--angle)));
-        }
-        100% {
-            transform: rotate(calc(-1 * var(--angle)));
-        }
-    }
-
-    //NOTE: without hidden overflow, the cells trigger the hover effect, and their action radius is quite large
-    overflow: hidden;
-
-    transition: all 0.3s ease-out;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 100%;
-    display: flex;
-    place-content: center;
-    place-items: center;
-
-    &__cell {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        place-content: center;
-        place-items: center;
-        text-align: center;
-        font-family: monospace;
-        font-size: 1rem;
-
-        color: white;
-        position: absolute;
-        &--highlighted {
-            color: red;
-            z-index: 50;
-        }
-    }
-
-    border: 2px solid #2a2a2a;
-    box-shadow: inset 2px 2px 20px 2px #2a2a2a;
-}
-
-@mixin cellDistribuition() {
-    @for $i from 0 to 60 {
-        .time-grid__cell--#{$i} {
-            top: cos(90deg - 6deg * $i) * 45%;
-            left: sin(90deg - 6deg * $i) * 45%;
-        }
-    }
-}
-
-@mixin spinningAnimation($time: 5s) {
-    animation: clockSpin $time infinite linear reverse;
-    @include cellDistribuition();
-
-    .time-grid__cell {
-        animation: numberSpin $time infinite linear reverse;
-        font-size: inherit;
-    }
-}
-
-#hoursGrid {
-    $factor: 0.6;
-    width: $clockDiam * $factor;
-    height: $clockDiam * $factor;
-    font-size: 1rem;
-    @include spinningAnimation($time: 3600s * 12);
-}
-#minutesGrid {
-    $factor: 0.75;
-    width: $clockDiam * $factor;
-    height: $clockDiam * $factor;
-    font-size: 1rem / $factor / 2;
-    @include spinningAnimation($time: 3600s);
-}
-#secondsGrid {
-    $factor: 0.95;
-    width: $clockDiam * $factor;
-    height: $clockDiam * $factor;
-    font-size: 1rem / $factor / 2;
-    @include spinningAnimation($time: 60s);
+			& .time-grid {
+				filter: blur(5px);
+			}
+		}
+	}
 }

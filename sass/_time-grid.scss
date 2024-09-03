@@ -1,0 +1,89 @@
+@use "./base" as constants;
+$clockDiam: constants.$clockDiam;
+@keyframes clockSpin {
+	from {
+		transform: translate(-50%, -50%) rotate(var(--angle));
+	}
+	to {
+		transform: translate(-50%, -50%) rotate(calc(var(--angle) + 360deg));
+	}
+}
+@keyframes numberSpin {
+	0% {
+		transform: rotate(calc(360deg + -1 * var(--angle)));
+	}
+	100% {
+		transform: rotate(calc(-1 * var(--angle)));
+	}
+}
+@mixin cellDistribuition() {
+	@for $i from 0 to 60 {
+		.time-grid__cell--#{$i} {
+			top: cos(90deg - 6deg * $i) * 45%;
+			left: sin(90deg - 6deg * $i) * 45%;
+		}
+	}
+}
+
+@mixin spinningAnimation($time: 5s) {
+	animation: clockSpin $time infinite linear reverse;
+	@include cellDistribuition();
+
+	.time-grid__cell {
+		animation: numberSpin $time infinite linear reverse;
+		font-size: inherit;
+	}
+}
+
+.time-grid {
+	//NOTE: without hidden overflow, the cells trigger the hover effect, and their action radius is quite large
+	overflow: hidden;
+
+	transition: all 0.3s ease-out;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 100%;
+	display: flex;
+	place-content: center;
+	place-items: center;
+
+	&__cell {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		place-content: center;
+		place-items: center;
+		text-align: center;
+		font-family: monospace;
+		font-size: 1rem;
+
+		color: white;
+		position: absolute;
+	}
+
+	border: 2px solid #2a2a2a;
+	box-shadow: inset 2px 2px 20px 2px #2a2a2a;
+
+	@mixin adjustSize($factor) {
+		width: $clockDiam * $factor;
+		height: $clockDiam * $factor;
+		font-size: calc(1rem / $factor / 2);
+	}
+
+	&--h {
+		@include spinningAnimation($time: 3600s * 12);
+		@include adjustSize(0.5);
+	}
+
+	&--m {
+		@include spinningAnimation($time: 3600s);
+		@include adjustSize(0.75);
+	}
+
+	&--s {
+		@include spinningAnimation($time: 60s);
+		@include adjustSize(0.95);
+	}
+}

@@ -1,0 +1,161 @@
+//=====
+$clockDiam: 55vmin;
+//=====
+* {
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none; /* Standard syntax */
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+:root,
+body {
+	background-color: #333;
+	display: flex;
+	place-content: center;
+	place-items: center;
+	flex-direction: column;
+
+	height: 100svh;
+	width: 100%;
+
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	font-size: clamp(10px, 2.5vw, 16px);
+	font-family: "Courier New", Courier, monospace;
+}
+
+a {
+	text-decoration: none; /* Remove underline */
+	color: inherit; /* Inherit text color from parent */
+	background-color: transparent; /* Remove background color */
+	cursor: pointer; /* Change cursor to pointer on hover */
+
+	/* Styling for visited links */
+	&:visited {
+		color: inherit; /* Inherit visited link color from parent */
+	}
+
+	/* Styling for hover/focus */
+	&:hover,
+	&:focus {
+		text-decoration: underline; /* Add underline on hover or focus */
+		/* You can also change the color or background here if desired */
+	}
+}
+
+.header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	background-color: #222;
+	color: #ddd;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.25em 5em;
+
+	&__title {
+		flex: 6;
+		font-size: 2rem;
+	}
+
+	&__links {
+		flex: 1;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		text-align: center;
+		font-size: 1.25rem;
+		gap: 1rem;
+		& i {
+			margin-right: 0.25em;
+			display: inline-block;
+		}
+	}
+
+	@media (hover: none) {
+		flex-direction: column;
+
+		&__links {
+			width: 100%;
+			margin-top: 1em;
+			margin-bottom: 1.5em;
+		}
+	}
+}
+
+@keyframes delayLoad {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+#replay {
+	position: relative;
+	font-size: 1rem;
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 1em 2.5em;
+	margin: 1em;
+	display: inline-block;
+	border-radius: 6em;
+	transition: all 0.2s;
+	border: none;
+	font-family: inherit;
+	font-weight: 500;
+	color: #eee;
+	background-color: transparent;
+	border: 2px solid #eee;
+	cursor: pointer;
+	opacity: 0;
+
+	animation: delayLoad 1s ease forwards 1s;
+	@media (hover: none) {
+		transform: scale(70%);
+	}
+
+	& i {
+		margin-right: 0.5em;
+	}
+
+	&:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	&:active {
+		transform: translateY(-1px);
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	}
+
+	&::after {
+		content: "";
+		display: inline-block;
+		height: 100%;
+		width: 100%;
+		border-radius: 100px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		transition: all 0.4s;
+	}
+
+	&::after {
+		background-color: #333;
+	}
+
+	&:hover::after {
+		transform: scaleX(1.4) scaleY(1.6);
+		opacity: 0;
+	}
+}

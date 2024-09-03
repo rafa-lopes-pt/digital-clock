@@ -12,28 +12,32 @@
         ></script>
     </head>
     <body>
+
         <header class="header">
             <h1 class="header__title">Digital Clock</h1>
             <div class="header__links">
                 <a href="https://rafa-lopes.netlify.app/" target="_blank"
                     ><i class="fa-regular fa-user"></i>Portfolio</a
                 >
-                <a href="https://github.com/rafa-lopes-pt" target="_blank"
+                <a href="https://github.com/rafa-lopes-pt/digital-clock" target="_blank"
                     ><i class="fa-brands fa-github"></i>Github</a
                 >
             </div>
         </header>
+
         <div id="clock" class="clock">
-            <div id="hoursGrid" class="time-grid"></div>
-            <div id="minutesGrid" class="time-grid"></div>
-            <div id="secondsGrid" class="time-grid"></div>
+            <div id="hoursGrid" class="time-grid time-grid--h"></div>
+            <div id="minutesGrid" class="time-grid time-grid--m"></div>
+            <div id="secondsGrid" class="time-grid time-grid--s"></div>
             <div class="marker"></div>
         </div>
+
         <button id="replay" onclick="replayAnimation()">
             <i class="fa-solid fa-arrow-rotate-right"></i>Replay
         </button>
 
         <script>
+			
             const hourGrid = document.getElementById("hoursGrid");
             const minuteGrid = document.getElementById("minutesGrid");
             const secondsGrid = document.getElementById("secondsGrid");
