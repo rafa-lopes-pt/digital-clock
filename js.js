@@ -63,20 +63,17 @@ function calcTimeAngle(time = new Date(), arr) {
 	//========================= STEP: SECONDS
 	const s = time.getSeconds();
 	const sAngle = getAngleByIndex(sArr.length, s);
-	console.log("s", s, "sAngle", sAngle);
 
 	//========================= STEP: MINUTES
 	const m = time.getMinutes();
 	//CompoundAngle m + s
 	const compoundAngle_sm = s / 10; //Each minute slice = 6deg
 	const mAngle = getAngleByIndex(mArr.length, m) + compoundAngle_sm;
-	console.log("m", m, "mAngle", mAngle);
 
 	//========================= STEP: HOURS
 	const h = parseToMeridian(time.getHours());
 	const compoundAngle_mh = (5 * 6 * m) / 60; //Each hour slice = 6deg * 5
 	const hAngle = getAngleByIndex(12, h) + compoundAngle_mh;
-	console.log("h", h, "hAngle", hAngle);
 
 	return { h: hAngle, m: mAngle, s: sAngle };
 }
