@@ -143,6 +143,11 @@ a:hover, a:focus {
   transform: scaleX(1.4) scaleY(1.6);
   opacity: 0;
 }
+@media (hover: none) and (orientation: landscape) {
+  #replay {
+    display: none;
+  }
+}
 
 @keyframes onLoadClock {
   from {
@@ -214,6 +219,11 @@ a:hover, a:focus {
   }
   .clock:hover .time-grid {
     filter: blur(5px);
+  }
+}
+@media (hover: none) and (orientation: landscape) {
+  .clock {
+    display: none;
   }
 }
 

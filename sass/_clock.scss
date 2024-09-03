@@ -1,5 +1,6 @@
 @use "./base" as constants;
 $clockDiam: constants.$clockDiam;
+
 @keyframes onLoadClock {
 	from {
 		opacity: 0;
@@ -83,6 +84,12 @@ $clockDiam: constants.$clockDiam;
 			& .time-grid {
 				filter: blur(5px);
 			}
+		}
+	}
+
+	@media (hover: none) and (orientation: landscape) {
+		& {
+			display: none;
 		}
 	}
 }

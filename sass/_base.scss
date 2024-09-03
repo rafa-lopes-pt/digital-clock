@@ -1,5 +1,6 @@
 //=====
 $clockDiam: 55vmin;
+
 //=====
 * {
 	-webkit-user-select: none; /* Safari */
@@ -157,5 +158,9 @@ a {
 	&:hover::after {
 		transform: scaleX(1.4) scaleY(1.6);
 		opacity: 0;
+	}
+
+	@media (hover: none) and (orientation: landscape) {
+		display: none;
 	}
 }
